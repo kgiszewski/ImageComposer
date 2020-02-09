@@ -23,15 +23,25 @@ namespace Composer
 
             using (var outputImage = new Image<Rgba32>(Configuration.Default, oneDimensionSize, oneDimensionSize, Rgba32.DarkBlue))
             {
-                var topLeftImage = _generateThumbnail($"{RootFolder}/input/ss.jpg", thumbnailOneDimensionSize, "100");
-                var topRightImage = _generateThumbnail($"{RootFolder}/input/f9h.jpg", thumbnailOneDimensionSize, "5");
-                var bottomLeftImage = _generateThumbnail($"{RootFolder}/input/moon.jpg", thumbnailOneDimensionSize, "25");
-                var bottomRightImage = _generateThumbnail($"{RootFolder}/input/iss.jpg", thumbnailOneDimensionSize, "40");
-                
-                outputImage.Mutate(x => x.DrawImage(topLeftImage, new Point(paddingAmount, paddingAmount), 1f));
-                outputImage.Mutate(x => x.DrawImage(topRightImage, new Point(thumbnailOneDimensionSize + totalPaddingInOneDimension, paddingAmount), 1f));
-                outputImage.Mutate(x => x.DrawImage(bottomLeftImage, new Point(paddingAmount, thumbnailOneDimensionSize + totalPaddingInOneDimension), 1f));
-                outputImage.Mutate(x => x.DrawImage(bottomRightImage, new Point(thumbnailOneDimensionSize + totalPaddingInOneDimension, thumbnailOneDimensionSize + totalPaddingInOneDimension), 1f));
+                using (var topLeftImage = _generateThumbnail($"{RootFolder}/input/ss.jpg", thumbnailOneDimensionSize, "100"))
+                {
+                    outputImage.Mutate(x => x.DrawImage(topLeftImage, new Point(paddingAmount, paddingAmount), 1f));
+                }
+
+                using (var topRightImage = _generateThumbnail($"{RootFolder}/input/f9h.jpg", thumbnailOneDimensionSize, "5"))
+                {
+                    outputImage.Mutate(x => x.DrawImage(topRightImage, new Point(thumbnailOneDimensionSize + totalPaddingInOneDimension, paddingAmount), 1f));
+                }
+
+                using (var bottomLeftImage = _generateThumbnail($"{RootFolder}/input/moon.jpg", thumbnailOneDimensionSize, "25"))
+                {
+                    outputImage.Mutate(x => x.DrawImage(bottomLeftImage, new Point(paddingAmount, thumbnailOneDimensionSize + totalPaddingInOneDimension), 1f));
+                }
+
+                using (var bottomRightImage = _generateThumbnail($"{RootFolder}/input/iss.jpg", thumbnailOneDimensionSize, "40"))
+                {
+                    outputImage.Mutate(x => x.DrawImage(bottomRightImage, new Point(thumbnailOneDimensionSize + totalPaddingInOneDimension, thumbnailOneDimensionSize + totalPaddingInOneDimension), 1f));
+                }
 
                 using (var watermark = Image.Load($"{RootFolder}/input/nasa.png"))
                 {
@@ -39,12 +49,6 @@ namespace Composer
                 }
 
                 outputImage.Save($"{RootFolder}/output/final.png");
-
-                //dispose overlaid images
-                topLeftImage.Dispose();
-                topRightImage.Dispose();
-                bottomLeftImage.Dispose();
-                bottomRightImage.Dispose();
             }
         }
 
