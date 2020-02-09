@@ -23,22 +23,22 @@ namespace Composer
 
             using (var outputImage = new Image<Rgba32>(Configuration.Default, oneDimensionSize, oneDimensionSize, Rgba32.DarkBlue))
             {
-                using (var topLeftImage = _generateThumbnail($"{RootFolder}/input/ss.jpg", thumbnailOneDimensionSize, "100"))
+                using (var topLeftImage = GenerateThumbnail($"{RootFolder}/input/ss.jpg", thumbnailOneDimensionSize, "100"))
                 {
                     outputImage.Mutate(x => x.DrawImage(topLeftImage, new Point(paddingAmount, paddingAmount), 1f));
                 }
 
-                using (var topRightImage = _generateThumbnail($"{RootFolder}/input/f9h.jpg", thumbnailOneDimensionSize, "5"))
+                using (var topRightImage = GenerateThumbnail($"{RootFolder}/input/f9h.jpg", thumbnailOneDimensionSize, "5"))
                 {
                     outputImage.Mutate(x => x.DrawImage(topRightImage, new Point(thumbnailOneDimensionSize + totalPaddingInOneDimension, paddingAmount), 1f));
                 }
 
-                using (var bottomLeftImage = _generateThumbnail($"{RootFolder}/input/moon.jpg", thumbnailOneDimensionSize, "25"))
+                using (var bottomLeftImage = GenerateThumbnail($"{RootFolder}/input/moon.jpg", thumbnailOneDimensionSize, "25"))
                 {
                     outputImage.Mutate(x => x.DrawImage(bottomLeftImage, new Point(paddingAmount, thumbnailOneDimensionSize + totalPaddingInOneDimension), 1f));
                 }
 
-                using (var bottomRightImage = _generateThumbnail($"{RootFolder}/input/iss.jpg", thumbnailOneDimensionSize, "40"))
+                using (var bottomRightImage = GenerateThumbnail($"{RootFolder}/input/iss.jpg", thumbnailOneDimensionSize, "40"))
                 {
                     outputImage.Mutate(x => x.DrawImage(bottomRightImage, new Point(thumbnailOneDimensionSize + totalPaddingInOneDimension, thumbnailOneDimensionSize + totalPaddingInOneDimension), 1f));
                 }
@@ -52,7 +52,7 @@ namespace Composer
             }
         }
 
-        private static Image _generateThumbnail(string path, int thumbnailOneDimensionSize, string price)
+        private static Image GenerateThumbnail(string path, int thumbnailOneDimensionSize, string price)
         {
             using (var img = Image.Load(path))
             {
